@@ -1,0 +1,25 @@
+{% extends 'gestion/base.html' %}
+
+{% block contenido %}
+
+<h1>Registrar transacción</h1>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Guardar transacción
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'transacciones' %}">
+    Volver a transacciones
+</a>
+
+{% endblock %}

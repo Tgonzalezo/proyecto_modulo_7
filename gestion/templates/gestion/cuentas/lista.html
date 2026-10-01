@@ -1,0 +1,58 @@
+{% extends 'gestion/base.html' %}
+
+{% block contenido %}
+
+<h1>Cuentas Alke Wallet</h1>
+
+<a href="{% url 'crear_cuenta' %}">
+    Crear nueva cuenta
+</a>
+
+<br><br>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Número de cuenta</th>
+        <th>Cliente</th>
+        <th>Tipo de cuenta</th>
+        <th>Saldo</th>
+        <th>Estado</th>
+    </tr>
+
+    {% for cuenta in cuentas %}
+
+    <tr>
+        <td>{{ cuenta.numero_cuenta }}</td>
+
+        <td>
+            {{ cuenta.cliente.nombre }}
+            {{ cuenta.cliente.apellido }}
+        </td>
+
+        <td>{{ cuenta.get_tipo_cuenta_display }}</td>
+
+        <td>${{ cuenta.saldo }}</td>
+
+        <td>
+            {% if cuenta.activa %}
+                Activa
+            {% else %}
+                Inactiva
+            {% endif %}
+        </td>
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="5">
+            No hay cuentas registradas.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

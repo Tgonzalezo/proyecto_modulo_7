@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alke Wallet</title>
+
+    <link rel="stylesheet" href="{% static 'gestion/css/estilos.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="{% url 'clientes' %}">
+            Clientes
+        </a>
+
+        <a href="{% url 'cuentas' %}">
+            Cuentas
+        </a>
+
+        <a href="{% url 'transacciones' %}">
+            Transacciones
+        </a>
+
+        {% if user.is_authenticated %}
+
+            <span>
+                Usuario: {{ user.username }}
+            </span>
+
+            <form
+                method="post"
+                action="{% url 'logout' %}"
+            >
+                {% csrf_token %}
+
+                <button type="submit">
+                    Cerrar sesión
+                </button>
+            </form>
+
+        {% endif %}
+    </nav>
+
+
+    <main class="contenedor">
+
+        {% block contenido %}
+
+        {% endblock %}
+
+    </main>
+
+</body>
+
+</html>

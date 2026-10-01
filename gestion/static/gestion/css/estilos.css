@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f6f8;
+    color: #222;
+}
+
+nav {
+    background-color: #0d6efd;
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav span {
+    color: white;
+    margin-left: auto;
+}
+
+nav form {
+    display: inline;
+}
+
+nav button {
+    background-color: white;
+    color: #0d6efd;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    color: #1f2937;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #d1d5db;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #e9ecef;
+}
+
+a {
+    color: #0d6efd;
+}
+
+button {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0b5ed7;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
