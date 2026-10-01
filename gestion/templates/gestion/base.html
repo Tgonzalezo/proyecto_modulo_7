@@ -4,57 +4,412 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    >
 
     <title>Alke Wallet</title>
 
-    <link rel="stylesheet" href="{% static 'gestion/css/estilos.css' %}">
+
+    <!-- Font Awesome -->
+    <link
+        href="{% static 'gestion/vendor/fontawesome-free/css/all.min.css' %}"
+        rel="stylesheet"
+        type="text/css"
+    >
+
+
+    <!-- SB Admin 2 -->
+    <link
+        href="{% static 'gestion/css/sb-admin-2.min.css' %}"
+        rel="stylesheet"
+    >
+
+
+    <!-- Estilos propios -->
+    <link
+        href="{% static 'gestion/css/estilos.css' %}"
+        rel="stylesheet"
+    >
+
 </head>
 
-<body>
 
-    <nav>
-        <a href="{% url 'clientes' %}">
-            Clientes
+<body id="page-top">
+
+
+<div id="wrapper">
+
+
+    <!-- SIDEBAR -->
+
+    <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        id="accordionSidebar"
+    >
+
+
+        <!-- Logo -->
+
+        <a
+            class="sidebar-brand d-flex align-items-center justify-content-center"
+            href="{% url 'clientes' %}"
+        >
+
+            <div class="sidebar-brand-icon rotate-n-15">
+
+                <i class="fas fa-wallet"></i>
+
+            </div>
+
+            <div class="sidebar-brand-text mx-3">
+
+                Alke Wallet
+
+            </div>
+
         </a>
 
-        <a href="{% url 'cuentas' %}">
-            Cuentas
-        </a>
 
-        <a href="{% url 'transacciones' %}">
-            Transacciones
-        </a>
+        <hr class="sidebar-divider my-0">
 
-        {% if user.is_authenticated %}
 
-            <span>
-                Usuario: {{ user.username }}
-            </span>
+        <!-- Clientes -->
 
-            <form
-                method="post"
-                action="{% url 'logout' %}"
+        <li class="nav-item">
+
+            <a
+                class="nav-link"
+                href="{% url 'clientes' %}"
             >
-                {% csrf_token %}
 
-                <button type="submit">
-                    Cerrar sesión
-                </button>
-            </form>
+                <i class="fas fa-fw fa-users"></i>
+
+                <span>
+                    Clientes
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Cuentas -->
+
+        <li class="nav-item">
+
+            <a
+                class="nav-link"
+                href="{% url 'cuentas' %}"
+            >
+
+                <i class="fas fa-fw fa-university"></i>
+
+                <span>
+                    Cuentas
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Transacciones -->
+
+        <li class="nav-item">
+
+            <a
+                class="nav-link"
+                href="{% url 'transacciones' %}"
+            >
+
+                <i class="fas fa-fw fa-exchange-alt"></i>
+
+                <span>
+                    Transacciones
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <hr class="sidebar-divider">
+
+
+        <!-- Administración -->
+
+        {% if user.is_staff %}
+
+        <li class="nav-item">
+
+            <a
+                class="nav-link"
+                href="/admin/"
+            >
+
+                <i class="fas fa-fw fa-cog"></i>
+
+                <span>
+                    Administración
+                </span>
+
+            </a>
+
+        </li>
 
         {% endif %}
-    </nav>
 
 
-    <main class="contenedor">
+        <hr class="sidebar-divider d-none d-md-block">
 
-        {% block contenido %}
 
-        {% endblock %}
+        <!-- Botón minimizar -->
 
-    </main>
+        <div class="text-center d-none d-md-inline">
+
+            <button
+                class="rounded-circle border-0"
+                id="sidebarToggle"
+            ></button>
+
+        </div>
+
+
+    </ul>
+
+
+    <!-- FIN SIDEBAR -->
+
+
+    <!-- CONTENIDO -->
+
+    <div
+        id="content-wrapper"
+        class="d-flex flex-column"
+    >
+
+
+        <div id="content">
+
+
+            <!-- TOPBAR -->
+
+            <nav
+                class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            >
+
+
+                <!-- Botón sidebar móvil -->
+
+                <button
+                    id="sidebarToggleTop"
+                    class="btn btn-link d-md-none rounded-circle mr-3"
+                >
+
+                    <i class="fa fa-bars"></i>
+
+                </button>
+
+
+                <!-- Título -->
+
+                <div
+                    class="d-none d-sm-inline-block"
+                >
+
+                    <strong>
+                        Sistema de Gestión Financiera
+                    </strong>
+
+                </div>
+
+
+                <!-- Usuario -->
+
+                <ul class="navbar-nav ml-auto">
+
+
+                    {% if user.is_authenticated %}
+
+                    <li class="nav-item dropdown no-arrow">
+
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="userDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+
+                            <span
+                                class="mr-2 d-none d-lg-inline text-gray-600 small"
+                            >
+
+                                {{ user.username }}
+
+                            </span>
+
+                            <i
+                                class="fas fa-user-circle fa-2x text-gray-400"
+                            ></i>
+
+                        </a>
+
+
+                        <div
+                            class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown"
+                        >
+
+
+                            <a
+                                class="dropdown-item"
+                                href="/admin/"
+                            >
+
+                                <i
+                                    class="fas fa-user-cog fa-sm fa-fw mr-2 text-gray-400"
+                                ></i>
+
+                                Administración
+
+                            </a>
+
+
+                            <div class="dropdown-divider"></div>
+
+
+                            <form
+                                method="post"
+                                action="{% url 'logout' %}"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="dropdown-item"
+                                >
+
+                                    <i
+                                        class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                                    ></i>
+
+                                    Cerrar sesión
+
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+                    </li>
+
+                    {% endif %}
+
+
+                </ul>
+
+
+            </nav>
+
+            <!-- FIN TOPBAR -->
+
+
+            <!-- CONTENIDO PRINCIPAL -->
+
+            <div class="container-fluid">
+
+
+                {% block contenido %}
+
+                {% endblock %}
+
+
+            </div>
+
+            <!-- FIN CONTENIDO PRINCIPAL -->
+
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer class="sticky-footer bg-white">
+
+            <div class="container my-auto">
+
+                <div class="copyright text-center my-auto">
+
+                    <span>
+
+                        Alke Wallet · Módulo 7 Django
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+
+    </div>
+
+    <!-- FIN CONTENIDO -->
+
+
+</div>
+
+
+<!-- Scroll arriba -->
+
+<a
+    class="scroll-to-top rounded"
+    href="#page-top"
+>
+
+    <i class="fas fa-angle-up"></i>
+
+</a>
+
+
+<!-- JQuery -->
+
+<script
+    src="{% static 'gestion/vendor/jquery/jquery.min.js' %}"
+></script>
+
+
+<!-- Bootstrap -->
+
+<script
+    src="{% static 'gestion/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"
+></script>
+
+
+<!-- JQuery easing -->
+
+<script
+    src="{% static 'gestion/vendor/jquery-easing/jquery.easing.min.js' %}"
+></script>
+
+
+<!-- SB Admin 2 -->
+
+<script
+    src="{% static 'gestion/js/sb-admin-2.min.js' %}"
+></script>
+
 
 </body>
 

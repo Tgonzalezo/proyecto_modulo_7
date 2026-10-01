@@ -2,30 +2,135 @@
 
 {% block contenido %}
 
-<h1>
-    {% if object %}
-        Editar cliente
-    {% else %}
-        Crear cliente
-    {% endif %}
-</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-<form method="post">
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">
+            {% if object %}
+                Editar cliente
+            {% else %}
+                Nuevo cliente
+            {% endif %}
+        </h1>
 
-    {% csrf_token %}
+        <p class="mb-0 text-gray-500">
+            Completa la información del cliente.
+        </p>
+    </div>
 
-    {{ form.as_p }}
+    <a
+        href="{% url 'clientes' %}"
+        class="btn btn-sm btn-secondary shadow-sm"
+    >
+        <i class="fas fa-arrow-left fa-sm text-white-50"></i>
+        Volver
+    </a>
 
-    <button type="submit">
-        Guardar
-    </button>
+</div>
 
-</form>
 
-<br>
+<div class="card shadow mb-4">
 
-<a href="{% url 'clientes' %}">
-    Volver a clientes
-</a>
+    <div class="card-header py-3">
+
+        <h6 class="m-0 font-weight-bold text-primary">
+
+            {% if object %}
+                Modificar datos del cliente
+            {% else %}
+                Registrar cliente
+            {% endif %}
+
+        </h6>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+
+                <div class="alert alert-danger">
+
+                    {{ form.non_field_errors }}
+
+                </div>
+
+            {% endif %}
+
+
+            {% for field in form %}
+
+                <div class="form-group">
+
+                    <label for="{{ field.id_for_label }}">
+
+                        {{ field.label }}
+
+                    </label>
+
+
+                    {{ field }}
+
+
+                    {% if field.help_text %}
+
+                        <small class="form-text text-muted">
+
+                            {{ field.help_text }}
+
+                        </small>
+
+                    {% endif %}
+
+
+                    {% for error in field.errors %}
+
+                        <div class="text-danger small">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+
+            <hr>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+
+                <i class="fas fa-save"></i>
+
+                Guardar
+
+            </button>
+
+
+            <a
+                href="{% url 'clientes' %}"
+                class="btn btn-secondary"
+            >
+
+                Cancelar
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
 
 {% endblock %}

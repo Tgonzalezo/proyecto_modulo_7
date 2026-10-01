@@ -2,81 +2,194 @@
 
 {% block contenido %}
 
-<h1>Transacciones Alke Wallet</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-<a href="{% url 'crear_transaccion' %}">
-    Registrar nueva transacción
-</a>
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">
+            Transacciones
+        </h1>
 
-<br><br>
+        <p class="mb-0 text-gray-500">
+            Registro y seguimiento de movimientos financieros.
+        </p>
+    </div>
 
-<table>
+    <a
+        href="{% url 'crear_transaccion' %}"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+    >
+        <i class="fas fa-plus fa-sm text-white-50"></i>
+        Nueva transacción
+    </a>
 
-    <tr>
-        <th>Cuenta</th>
-        <th>Cliente</th>
-        <th>Tipo</th>
-        <th>Monto</th>
-        <th>Descripción</th>
-        <th>Fecha</th>
-        <th>Acciones</th>
-    </tr>
+</div>
 
-    {% for transaccion in transacciones %}
 
-    <tr>
+<div class="card shadow mb-4">
 
-        <td>
-            {{ transaccion.cuenta.numero_cuenta }}
-        </td>
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-        <td>
-            {{ transaccion.cuenta.cliente.nombre }}
-            {{ transaccion.cuenta.cliente.apellido }}
-        </td>
+        <h6 class="m-0 font-weight-bold text-primary">
+            Historial de transacciones
+        </h6>
 
-        <td>
-            {{ transaccion.get_tipo_display }}
-        </td>
+        <span class="badge badge-primary badge-pill">
+            {{ transacciones|length }}
+        </span>
 
-        <td>
-            ${{ transaccion.monto }}
-        </td>
+    </div>
 
-        <td>
-            {{ transaccion.descripcion }}
-        </td>
 
-        <td>
-            {{ transaccion.fecha }}
-        </td>
+    <div class="card-body">
 
-        <td>
+        <div class="table-responsive">
 
-            <a href="{% url 'editar_transaccion' transaccion.id %}">
-                Editar
-            </a>
+            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
 
-            |
+                <thead class="thead-light">
 
-            <a href="{% url 'eliminar_transaccion' transaccion.id %}">
-                Eliminar
-            </a>
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Cliente</th>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
 
-        </td>
+                </thead>
 
-    </tr>
 
-    {% empty %}
+                <tbody>
 
-    <tr>
-        <td colspan="7">
-            No hay transacciones registradas.
-        </td>
-    </tr>
+                    {% for transaccion in transacciones %}
 
-    {% endfor %}
+                    <tr>
 
-</table>
+                        <td>
+                            <i class="fas fa-wallet text-primary mr-2"></i>
+                            {{ transaccion.cuenta.numero_cuenta }}
+                        </td>
+
+                        <td>
+                            {{ transaccion.cuenta.cliente.nombre }}
+                            {{ transaccion.cuenta.cliente.apellido }}
+                        </td>
+
+                        <td>
+
+                            {% if transaccion.tipo == 'DEPOSITO' %}
+
+                                <span class="badge badge-success">
+                                    <i class="fas fa-arrow-down mr-1"></i>
+                                    Depósito
+                                </span>
+
+                            {% elif transaccion.tipo == 'RETIRO' %}
+
+                                <span class="badge badge-danger">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    Retiro
+                                </span>
+
+                            {% elif transaccion.tipo == 'TRANSFERENCIA' %}
+
+                                <span class="badge badge-info">
+                                    <i class="fas fa-exchange-alt mr-1"></i>
+                                    Transferencia
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge badge-secondary">
+                                    {{ transaccion.get_tipo_display }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if transaccion.tipo == 'DEPOSITO' %}
+
+                                <strong class="text-success">
+                                    + ${{ transaccion.monto }}
+                                </strong>
+
+                            {% elif transaccion.tipo == 'RETIRO' %}
+
+                                <strong class="text-danger">
+                                    - ${{ transaccion.monto }}
+                                </strong>
+
+                            {% else %}
+
+                                <strong>
+                                    ${{ transaccion.monto }}
+                                </strong>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ transaccion.descripcion|default:"Sin descripción" }}
+                        </td>
+
+                        <td>
+                            {{ transaccion.fecha|date:"d/m/Y H:i" }}
+                        </td>
+
+                        <td class="text-center">
+
+                            <a
+                                href="{% url 'editar_transaccion' transaccion.id %}"
+                                class="btn btn-sm btn-warning"
+                            >
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </a>
+
+                            <a
+                                href="{% url 'eliminar_transaccion' transaccion.id %}"
+                                class="btn btn-sm btn-danger"
+                            >
+                                <i class="fas fa-trash"></i>
+                                Eliminar
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center text-muted py-4">
+
+                            <i class="fas fa-exchange-alt fa-2x mb-3"></i>
+
+                            <p class="mb-0">
+                                No hay transacciones registradas.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

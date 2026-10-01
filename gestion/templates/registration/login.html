@@ -1,57 +1,232 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    >
+
     <title>Iniciar sesión - Alke Wallet</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    <!-- Font Awesome -->
+    <link
+        href="{% static 'gestion/vendor/fontawesome-free/css/all.min.css' %}"
+        rel="stylesheet"
+        type="text/css"
+    >
 
-        .login {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 350px;
-        }
+    <!-- SB Admin 2 -->
+    <link
+        href="{% static 'gestion/css/sb-admin-2.min.css' %}"
+        rel="stylesheet"
+    >
 
-        button {
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-        }
-    </style>
+    <!-- Estilos propios -->
+    <link
+        href="{% static 'gestion/css/estilos.css' %}"
+        rel="stylesheet"
+    >
+
 </head>
 
-<body>
 
-<div class="login">
+<body class="bg-gradient-primary">
 
-    <h1>Alke Wallet</h1>
+    <div class="container">
 
-    <h2>Iniciar sesión</h2>
+        <div class="row justify-content-center">
 
-    <form method="post">
+            <div class="col-xl-10 col-lg-12 col-md-9">
 
-        {% csrf_token %}
+                <div class="card o-hidden border-0 shadow-lg my-5">
 
-        {{ form.as_p }}
+                    <div class="card-body p-0">
 
-        <button type="submit">
-            Ingresar
-        </button>
+                        <div class="row">
 
-    </form>
+                            <!-- Panel visual -->
 
-</div>
+                            <div
+                                class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-primary"
+                            >
+
+                                <div class="text-center text-white p-5">
+
+                                    <i class="fas fa-wallet fa-5x mb-4"></i>
+
+                                    <h2 class="font-weight-bold">
+                                        Alke Wallet
+                                    </h2>
+
+                                    <p class="mb-0">
+                                        Gestión segura y sencilla de clientes,
+                                        cuentas y transacciones.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Formulario -->
+
+                            <div class="col-lg-6">
+
+                                <div class="p-5">
+
+                                    <div class="text-center">
+
+                                        <h1 class="h4 text-gray-900 mb-2">
+                                            Bienvenido
+                                        </h1>
+
+                                        <p class="text-gray-500 mb-4">
+                                            Ingresa tus credenciales para continuar.
+                                        </p>
+
+                                    </div>
+
+
+                                    {% if form.errors %}
+
+                                        <div class="alert alert-danger">
+
+                                            Usuario o contraseña incorrectos.
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    <form method="post" class="user">
+
+                                        {% csrf_token %}
+
+
+                                        <div class="form-group">
+
+                                            <label for="{{ form.username.id_for_label }}">
+                                                Usuario
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                name="{{ form.username.html_name }}"
+                                                id="{{ form.username.id_for_label }}"
+                                                class="form-control form-control-user"
+                                                placeholder="Ingrese su usuario"
+                                                required
+                                                autofocus
+                                            >
+
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            <label for="{{ form.password.id_for_label }}">
+                                                Contraseña
+                                            </label>
+
+                                            <input
+                                                type="password"
+                                                name="{{ form.password.html_name }}"
+                                                id="{{ form.password.id_for_label }}"
+                                                class="form-control form-control-user"
+                                                placeholder="Ingrese su contraseña"
+                                                required
+                                            >
+
+                                        </div>
+
+
+                                        {% if next %}
+
+                                            <input
+                                                type="hidden"
+                                                name="next"
+                                                value="{{ next }}"
+                                            >
+
+                                        {% endif %}
+
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary btn-user btn-block"
+                                        >
+
+                                            <i class="fas fa-sign-in-alt mr-2"></i>
+
+                                            Iniciar sesión
+
+                                        </button>
+
+                                    </form>
+
+
+                                    <hr>
+
+
+                                    <div class="text-center">
+
+                                        <small class="text-muted">
+
+                                            Alke Wallet · Módulo 7 Django
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JQuery -->
+
+    <script
+        src="{% static 'gestion/vendor/jquery/jquery.min.js' %}"
+    ></script>
+
+
+    <!-- Bootstrap -->
+
+    <script
+        src="{% static 'gestion/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"
+    ></script>
+
+
+    <!-- JQuery easing -->
+
+    <script
+        src="{% static 'gestion/vendor/jquery-easing/jquery.easing.min.js' %}"
+    ></script>
+
+
+    <!-- SB Admin 2 -->
+
+    <script
+        src="{% static 'gestion/js/sb-admin-2.min.js' %}"
+    ></script>
 
 </body>
 

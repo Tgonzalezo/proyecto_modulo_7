@@ -2,71 +2,156 @@
 
 {% block contenido %}
 
-<h1>Cuentas Alke Wallet</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-<a href="{% url 'crear_cuenta' %}">
-    Crear nueva cuenta
-</a>
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">
+            Cuentas
+        </h1>
 
-<br><br>
+        <p class="mb-0 text-gray-500">
+            Administración de cuentas asociadas a clientes.
+        </p>
+    </div>
 
-<table>
+    <a
+        href="{% url 'crear_cuenta' %}"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+    >
+        <i class="fas fa-plus fa-sm text-white-50"></i>
+        Nueva cuenta
+    </a>
 
-    <tr>
-        <th>Número de cuenta</th>
-        <th>Cliente</th>
-        <th>Tipo de cuenta</th>
-        <th>Saldo</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-    </tr>
+</div>
 
-    {% for cuenta in cuentas %}
 
-    <tr>
-        <td>{{ cuenta.numero_cuenta }}</td>
+<div class="card shadow mb-4">
 
-        <td>
-            {{ cuenta.cliente.nombre }}
-            {{ cuenta.cliente.apellido }}
-        </td>
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-        <td>{{ cuenta.get_tipo_cuenta_display }}</td>
+        <h6 class="m-0 font-weight-bold text-primary">
+            Cuentas registradas
+        </h6>
 
-        <td>${{ cuenta.saldo }}</td>
+        <span class="badge badge-primary badge-pill">
+            {{ cuentas|length }}
+        </span>
 
-        <td>
-            {% if cuenta.activa %}
-                Activa
-            {% else %}
-                Inactiva
-            {% endif %}
-        </td>
+    </div>
 
-        <td>
-            <a href="{% url 'editar_cuenta' cuenta.id %}">
-                Editar
-            </a>
 
-            |
+    <div class="card-body">
 
-            <a href="{% url 'eliminar_cuenta' cuenta.id %}">
-                Eliminar
-            </a>
-        </td>
+        <div class="table-responsive">
 
-    </tr>
+            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
 
-    {% empty %}
+                <thead class="thead-light">
 
-    <tr>
-        <td colspan="6">
-            No hay cuentas registradas.
-        </td>
-    </tr>
+                    <tr>
+                        <th>Número de cuenta</th>
+                        <th>Cliente</th>
+                        <th>Tipo</th>
+                        <th>Saldo</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
 
-    {% endfor %}
+                </thead>
 
-</table>
+
+                <tbody>
+
+                    {% for cuenta in cuentas %}
+
+                    <tr>
+
+                        <td>
+                            <i class="fas fa-wallet text-primary mr-2"></i>
+                            {{ cuenta.numero_cuenta }}
+                        </td>
+
+                        <td>
+                            {{ cuenta.cliente.nombre }}
+                            {{ cuenta.cliente.apellido }}
+                        </td>
+
+                        <td>
+                            {{ cuenta.get_tipo_cuenta_display }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                ${{ cuenta.saldo }}
+                            </strong>
+                        </td>
+
+                        <td>
+
+                            {% if cuenta.activa %}
+
+                                <span class="badge badge-success">
+                                    Activa
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge badge-secondary">
+                                    Inactiva
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="text-center">
+
+                            <a
+                                href="{% url 'editar_cuenta' cuenta.id %}"
+                                class="btn btn-sm btn-warning"
+                            >
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </a>
+
+                            <a
+                                href="{% url 'eliminar_cuenta' cuenta.id %}"
+                                class="btn btn-sm btn-danger"
+                            >
+                                <i class="fas fa-trash"></i>
+                                Eliminar
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="6" class="text-center text-muted py-4">
+
+                            <i class="fas fa-university fa-2x mb-3"></i>
+
+                            <p class="mb-0">
+                                No hay cuentas registradas.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

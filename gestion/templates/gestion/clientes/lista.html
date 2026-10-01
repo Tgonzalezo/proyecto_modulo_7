@@ -1,60 +1,131 @@
 {% extends 'gestion/base.html' %}
 
-
 {% block contenido %}
 
-<h1>Clientes Alke Wallet</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-<a href="{% url 'crear_cliente' %}">
-    Crear nuevo cliente
-</a>
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">
+            Clientes
+        </h1>
 
+        <p class="mb-0 text-gray-500">
+            Gestión de clientes registrados en Alke Wallet.
+        </p>
+    </div>
 
-<table border="1" cellpadding="10">
+    <a
+        href="{% url 'crear_cliente' %}"
+        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+    >
+        <i class="fas fa-user-plus fa-sm text-white-50"></i>
+        Nuevo cliente
+    </a>
 
-<tr>
-    <th>Nombre</th>
-    <th>Apellido</th>
-    <th>Email</th>
-    <th>Acciones</th>
-</tr>
-
-
-{% for cliente in clientes %}
-
-<tr>
-
-<td>
-{{ cliente.nombre }}
-</td>
-
-<td>
-{{ cliente.apellido }}
-</td>
-
-<td>
-{{ cliente.email }}
-</td>
-
-<td>
-
-<a href="{% url 'editar_cliente' cliente.id %}">
-Editar
-</a>
-
-|
-
-<a href="{% url 'eliminar_cliente' cliente.id %}">
-Eliminar
-</a>
-
-</td>
-
-</tr>
-
-{% endfor %}
+</div>
 
 
-</table>
+<div class="card shadow mb-4">
+
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
+        <h6 class="m-0 font-weight-bold text-primary">
+            Clientes registrados
+        </h6>
+
+        <span class="badge badge-primary badge-pill">
+            {{ clientes|length }}
+        </span>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+
+                <thead class="thead-light">
+
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo electrónico</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for cliente in clientes %}
+
+                    <tr>
+
+                        <td>
+                            <i class="fas fa-user text-primary mr-2"></i>
+                            {{ cliente.nombre }}
+                        </td>
+
+                        <td>
+                            {{ cliente.apellido }}
+                        </td>
+
+                        <td>
+                            <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                            {{ cliente.email }}
+                        </td>
+
+                        <td class="text-center">
+
+                            <a
+                                href="{% url 'editar_cliente' cliente.id %}"
+                                class="btn btn-sm btn-warning"
+                            >
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </a>
+
+                            <a
+                                href="{% url 'eliminar_cliente' cliente.id %}"
+                                class="btn btn-sm btn-danger"
+                            >
+                                <i class="fas fa-trash"></i>
+                                Eliminar
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center text-muted py-4">
+
+                            <i class="fas fa-users fa-2x mb-3"></i>
+
+                            <p class="mb-0">
+                                No hay clientes registrados.
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

@@ -2,27 +2,50 @@
 
 {% block contenido %}
 
-<h1>Eliminar cliente</h1>
+<div class="row justify-content-center">
 
-<p>
-    ¿Estás seguro de que deseas eliminar a
-    <strong>{{ object.nombre }} {{ object.apellido }}</strong>?
-</p>
+    <div class="col-lg-7">
 
-<form method="post">
+        <div class="card shadow mb-4 border-left-danger">
 
-    {% csrf_token %}
+            <div class="card-body">
 
-    <button type="submit">
-        Sí, eliminar
-    </button>
+                <div class="text-center mb-4">
 
-</form>
+                    <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
 
-<br>
+                    <h1 class="h4 text-gray-800">
+                        Eliminar cliente
+                    </h1>
 
-<a href="{% url 'clientes' %}">
-    Cancelar
-</a>
+                    <p class="text-gray-600">
+                        ¿Estás seguro de que deseas eliminar a
+                        <strong>{{ object.nombre }} {{ object.apellido }}</strong>?
+                    </p>
+
+                </div>
+
+                <form method="post" class="text-center">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i>
+                        Sí, eliminar
+                    </button>
+
+                    <a href="{% url 'clientes' %}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
