@@ -60,6 +60,19 @@ class CuentaCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('cuentas')
 
 
+class CuentaUpdateView(LoginRequiredMixin, UpdateView):
+    model = Cuenta
+    form_class = CuentaForm
+    template_name = 'gestion/cuentas/formulario.html'
+    success_url = reverse_lazy('cuentas')
+
+
+class CuentaDeleteView(LoginRequiredMixin, DeleteView):
+    model = Cuenta
+    template_name = 'gestion/cuentas/eliminar.html'
+    success_url = reverse_lazy('cuentas')
+
+
 # ==========================
 # TRANSACCIONES
 # ==========================
@@ -74,4 +87,17 @@ class TransaccionCreateView(LoginRequiredMixin, CreateView):
     model = Transaccion
     form_class = TransaccionForm
     template_name = 'gestion/transacciones/formulario.html'
+    success_url = reverse_lazy('transacciones')
+
+
+class TransaccionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Transaccion
+    form_class = TransaccionForm
+    template_name = 'gestion/transacciones/formulario.html'
+    success_url = reverse_lazy('transacciones')
+
+
+class TransaccionDeleteView(LoginRequiredMixin, DeleteView):
+    model = Transaccion
+    template_name = 'gestion/transacciones/eliminar.html'
     success_url = reverse_lazy('transacciones')

@@ -10,7 +10,7 @@
 
 <br><br>
 
-<table border="1" cellpadding="10">
+<table>
 
     <tr>
         <th>Número de cuenta</th>
@@ -18,6 +18,7 @@
         <th>Tipo de cuenta</th>
         <th>Saldo</th>
         <th>Estado</th>
+        <th>Acciones</th>
     </tr>
 
     {% for cuenta in cuentas %}
@@ -41,12 +42,25 @@
                 Inactiva
             {% endif %}
         </td>
+
+        <td>
+            <a href="{% url 'editar_cuenta' cuenta.id %}">
+                Editar
+            </a>
+
+            |
+
+            <a href="{% url 'eliminar_cuenta' cuenta.id %}">
+                Eliminar
+            </a>
+        </td>
+
     </tr>
 
     {% empty %}
 
     <tr>
-        <td colspan="5">
+        <td colspan="6">
             No hay cuentas registradas.
         </td>
     </tr>
