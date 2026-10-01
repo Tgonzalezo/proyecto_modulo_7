@@ -100,6 +100,17 @@ class CuentaForm(forms.ModelForm):
             ),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['cliente'].empty_label = 'Seleccione una opción'
+
+        opciones_tipo_cuenta = [
+            ('', 'Seleccione una opción')
+        ] + list(self.fields['tipo_cuenta'].choices)[1:]
+
+        self.fields['tipo_cuenta'].choices = opciones_tipo_cuenta
+
 
 class TransaccionForm(forms.ModelForm):
 
@@ -145,3 +156,14 @@ class TransaccionForm(forms.ModelForm):
                 }
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['cuenta'].empty_label = 'Seleccione una opción'
+
+        opciones_tipo = [
+            ('', 'Seleccione una opción')
+        ] + list(self.fields['tipo'].choices)[1:]
+
+        self.fields['tipo'].choices = opciones_tipo
